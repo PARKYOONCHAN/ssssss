@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<!-- <nav id="headerNav">
+		<p><a href="/">HOME</a></p>
+		<ul>
+			<li><a href="/user/list.do">유저 리스트(JDBC)</a></li>
+			<li><a href="/user/list2.do">유저 리스트(Mybatis)</a></li>
+			<li><a href="/user/board.do">게시글 리스트</a></li>
+		</ul>
+	
+	</nav> -->
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">HOME</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+      <ul class="navbar-nav" th:with="uri=${#httpServletRequest.requestURI}">
+        <li class="nav-item">
+          <a th:classappend="${(#strings.equals(uri,'/user/list.do'))?'active':''}"
+ 			class="nav-link " href="/user/list.do">유저리스트(JDBC)</a>
+        </li>
+        <li class="nav-item">
+          <a th:classappend="${(#strings.equals(uri,'/user/list2.do'))?'active':''}"
+           class="nav-link" href="/user/list2.do">유저리스트(Mybatis)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/board/list.do">게시글리스트</a>
+        </li>
+	    </ul>
+        
+	    <ul class="navbar-nav ">
+	    	<th:block th:if="${session.loginUser==null}">
+		    	<li class="nav-item">
+			      	<a class="nav-link" href="/user/login.do">로그인</a>
+		    	</li>
+	    	</th:block>
+	    	<th:block th:unless="${session.loginUser==null}">
+	    		<li class="nav-item">
+			      	<a class="nav-link" th:href="@{/user/detail.do(userId=${session.loginUser.userId})}">
+			      		<strong th:text="${session.loginUser.userId}"></strong>
+			      		(<strong th:text="${session.loginUser.name}"></strong>)
+			      	</a>
+		    	</li>
+		    	<li>
+		    		<a href="/user/logout.do" class="nav-link">로그아웃</a>
+		    	</li>
+	    	</th:block>
+	    </ul>
+
+    </div>
+  </div>
+      
+      
+</nav>
+<p th:text="${#httpServletRequest.requestURI}"></p>
+	
+
+</html>
